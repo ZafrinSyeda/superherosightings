@@ -65,6 +65,35 @@
       <p/>
     </div>
   </div>
+  <div >
+    <h3>Have you seen a superhero or supervillain recently?</h3>
+    <h4>Submit what you saw here: </h4>
+    <p/>
+    <div class="center-block">
+    <form action="addSighting" method="POST" class = 'card p-3 bg-light'>
+      <div class="form-group ">
+        <label for="superherovillain">Superhero/ Villain:
+        </label>
+        <select id="superherovillain" name="superId" class="form-control">
+          <option th:each="shv : ${superherovillains}"
+                  th:value="${shv.id}"
+                  th:text="${shv.name}">Superhero/Villain Name</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location:
+        </label>
+        <select id="location" name="locationId" class="form-control">
+          <option th:each="loc : ${locations}"
+                  th:value="${loc.id}"
+                  th:text="${loc.name}">Superhero/Villain Name</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-dark">Add Sighting</button>
+    </form>
+    </div>
+  </div>
 </div>
 <!-- End main body -->
 <!-- needed to run bootstrap -->
