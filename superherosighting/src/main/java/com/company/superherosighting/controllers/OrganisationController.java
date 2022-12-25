@@ -6,6 +6,7 @@ import com.company.superherosighting.entities.Organisation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class OrganisationController {
     @Autowired
     OrganisationDaoDB orgDao;
 
+    @GetMapping("organisations")
     public String displayOrganisations(Model model) {
         List<Organisation> organisations = orgDao.getAllOrganisations();
         model.addAttribute("organisations", organisations);

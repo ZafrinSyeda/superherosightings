@@ -22,7 +22,7 @@ public class MainController {
     @Autowired
     SuperherovillainDaoDB superDao;
 
-    @GetMapping("home")
+    @GetMapping("/")
     public String displayRecentSightings(Model model) {
         List<Sighting> recentSightings = sightingDao.getRecent10Sightings();
         model.addAttribute("sightings", recentSightings);

@@ -15,7 +15,7 @@
 <!-- Beginning of navigation menu -->
 <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">HERO Superhero Sightings</a>
+        <a class="navbar-brand" href="/">HERO Superhero Sightings</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -43,7 +43,29 @@
     <!-- end of navbar -->
 <div class="container">
     <div class="row m-4">
-   </div>
+        <h1>Organisations </h1>
+        </p>
+        <p/>
+    </div>
+    <div>
+        <div class="row">
+            <div class="card w-100" th:each="org : ${organisations}">
+                <div class="card-body">
+                    <h5 class="card-title"
+                        th:text="${org.name}">
+                    </h5>
+                    <p class="card-text" th:text="'Description: ' +${org.description}"/>
+                    <p class="card-text" th:text="'Address: ' +${org.address}"/>
+                    <p class="card-text" th:text="'City: ' +${org.city}"/>
+                    <p class="card-text" th:text="'Country: ' +${org.country}"/>
+                    <p class="card-text" th:text="'Postcode: ' +${org.postcode}"/>
+                    <p class="card-text" th:text="'Phone Number: ' +${org.phoneNumber}"/>
+                    <p class="card-text" th:text="'Email: ' +${org.email}"/>
+                </div>
+            </div>
+            <p/>
+        </div>
+    </div>
 </div>
 <!-- End main body -->
 <!-- needed to run bootstrap -->
