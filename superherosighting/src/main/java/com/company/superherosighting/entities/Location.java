@@ -1,5 +1,10 @@
 package com.company.superherosighting.entities;
 
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.util.Objects;
 
 /**
@@ -8,13 +13,29 @@ import java.util.Objects;
  */
 public class Location {
     private int id;
+    @NotBlank(message = "Location name cannot be blank")
+    @Size(max = 60, message="Location name must be less than 60 characters.")
     private String name;
+
+    @Size(max=300, message = "Hero description must be less than 300 characters.")
     private String description;
+
+    @Size(max=300, message = "Address must be less than 300 characters.")
     private String address;
+
+    @Size(max=100, message = "City must be less than 100 characters.")
     private String city;
+
+    @Size(max=100, message = "Country must be less than 100 characters.")
     private String country;
+
+    @Size(max=15, message = "Postcode must be less than 100 characters.")
     private String postcode;
+
+    @Digits(integer=10, fraction=6, message="Longitude's integral part goes up to 10 digits, and fractal part goes up to 6 ")
     private double longitude;
+
+    @Digits(integer=10, fraction=6, message="latitude's integral part goes up to 10 digits, and fractal part goes up to 6 ")
     private double latitude;
 
     public int getId() {

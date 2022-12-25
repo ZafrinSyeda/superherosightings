@@ -44,12 +44,132 @@
 </div>
 <!-- end of navbar -->
 <div class="container">
-    <div class="row m-4">
+    <div >
         <h1>Sightings </h1>
         </p>
         <p/>
+        <div >
+            <h3>Have you seen a superhero or supervillain recently?</h3>
+            <h4>Submit what you saw here: </h4>
+            <p/>
+            <div class="center-block">
+                <form action="addSighting" method="POST" class='card p-3 bg-light'>
+                    <div class="text-center"
+                         th:if="${!shvErrors.isEmpty()}">
+                        <p class="alert alert-danger" th:each="error : ${shvErrors}"
+                           th:text="${error.message}">Error message</p>
+                    </div>
+                    <div class="text-center"
+                        th:if="${!locErrors.isEmpty()}">
+                        <p class="alert alert-danger" th:each="error : ${locErrors}"
+                           th:text="${error.message}">Error message</p>
+                    </div>
+
+                    <div class="form-group ">
+                        <label for="superherovillain">Superhero/ Villain:
+                        </label>
+                        <select id="superherovillain" name="superId" class="form-control">
+                            <option th:each="shv : ${superherovillains}"
+                                    th:value="${shv.id}"
+                                    th:text="${shv.name}">Superhero/Villain Name
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" name="addNewHeroOption" id="addNewHero" th:checked="${addHeroBool}" />
+                        <label class="form-check-label" for="addNewHero">
+                            Add a New Hero
+                        </label>
+                    </div>
+                    <div id="addHeroForm" class="form-group">
+                        <label for="heroName">
+                            Name</label>
+                        <input type="text" name="heroName"
+                               id="heroName" class="form-control"/>
+                        <label for="heroDesc">
+                            Description</label>
+                        <input type="textarea" name="heroDesc"
+                               id="heroDesc" class="form-control"/>
+                        <label for="superpower">
+                            Superpower</label>
+                        <input type="text" name="superpower"
+                               id="superpower" class="form-control"/>
+                        <label for="organisation">Organisation:
+                        </label>
+                        <select id="organisation" name="organisationId" class="form-control">
+                            <option th:each="org : ${organisations}"
+                                    th:value="${org.id}"
+                                    th:text="${org.name}">Organisation Name
+                            </option>
+                        </select>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isHero" name="isHero" th:checked="${isHero}">
+                            <label class="form-check-label" for="isHero">
+                                Tick here if they're a hero (leave it blank if they're a villain)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location:
+                        </label>
+                        <select id="location" name="locationId" class="form-control">
+                            <option th:each="loc : ${locations}"
+                                    th:value="${loc.id}"
+                                    th:text="${loc.name}">Superhero/Villain Name
+                            </option>
+                        </select>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" name="addNewLocationOption" id="addNewLocation" th:checked="${addNewLocationOption} ? 'checked'">
+                            <label class="form-check-label" for="addNewLocation">
+                                Add a New Location
+                            </label>
+                        </div>
+                        <div id="addLocationForm" class="form-group">
+                            <label for="locationName">
+                                Name</label>
+                            <input type="text" name="locationName"
+                                   id="locationName" class="form-control"/>
+                            <label for="locationDescription">
+                                Description</label>
+                            <input type="textarea" name="locationDescription"
+                                   id="locationDescription" class="form-control"/>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address">
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="city" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="city" name="city">
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="country" class="form-label">Country</label>
+                                    <input type="text" class="form-control" id="country" name="country">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="postcode" class="form-label">Postcode</label>
+                                    <input type="text" class="form-control" id="postcode" name="postcode">
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="longitude" class="form-label">Longitude</label>
+                                    <input type="text" class="form-control" id="longitude" name="longitude">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="latitude" class="form-label">Latitude</label>
+                                    <input type="text" class="form-control" id="latitude" name="latitude">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-dark">Add Sighting</button>
+                </form>
+            </div>
+            </div>
     </div>
     <div>
+        <h3>Sightings</h3>
         <div class="row">
             <div class="card w-100" th:each="sighting : ${sightings}">
                 <div class="card-body">
@@ -68,114 +188,7 @@
             </div>
             <p/>
         </div>
-    </div>
-    <div>
-        <h3>Have you seen a superhero or supervillain recently?</h3>
-        <h4>Submit what you saw here: </h4>
-        <p/>
-        <div class="center-block">
-            <form action="addSighting" method="POST" class='card p-3 bg-light'>
-                <div class="form-group ">
-                    <label for="superherovillain">Superhero/ Villain:
-                    </label>
-                    <select id="superherovillain" name="superId" class="form-control">
-                        <option th:each="shv : ${superherovillains}"
-                                th:value="${shv.id}"
-                                th:text="${shv.name}">Superhero/Villain Name
-                        </option>
-                    </select>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="true" name="addNewHeroOption" id="addNewHero" th:checked="${addNewHeroOption} ? 'checked'">
-                    <label class="form-check-label" for="addNewHero">
-                        Add a New Hero
-                    </label>
-                </div>
-                <div id="addHeroForm" class="form-group">
-                    <label for="heroName">
-                         Name</label>
-                    <input type="text" name="heroName"
-                           id="heroName" class="form-control"/>
-                    <label for="heroDesc">
-                        Description</label>
-                    <input type="textarea" name="heroDesc"
-                           id="heroDesc" class="form-control"/>
-                    <label for="superpower">
-                        Superpower</label>
-                    <input type="text" name="superpower"
-                           id="superpower" class="form-control"/>
-                    <label for="organisation">Organisation:
-                    </label>
-                    <select id="organisation" name="organisationId" class="form-control">
-                        <option th:each="org : ${organisations}"
-                                th:value="${org.id}"
-                                th:text="${org.name}">Organisation Name
-                        </option>
-                    </select>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="true" id="isHero" name="isHero" th:checked="${isHero}">
-                        <label class="form-check-label" for="isHero">
-                            Tick here if they're a hero (leave it blank if they're a villain)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="location">Location:
-                    </label>
-                    <select id="location" name="locationId" class="form-control">
-                        <option th:each="loc : ${locations}"
-                                th:value="${loc.id}"
-                                th:text="${loc.name}">Superhero/Villain Name
-                        </option>
-                    </select>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="true" name="addNewLocationOption" id="addNewLocation" th:checked="${addNewLocationOption} ? 'checked'">
-                        <label class="form-check-label" for="addNewLocation">
-                            Add a New Location
-                        </label>
-                    </div>
-                    <div id="addLocationForm" class="form-group">
-                        <label for="locationName">
-                            Name</label>
-                        <input type="text" name="locationName"
-                               id="locationName" class="form-control"/>
-                        <label for="locationDescription">
-                            Description</label>
-                        <input type="textarea" name="locationDescription"
-                               id="locationDescription" class="form-control"/>
-                        <div class="row g-3">
-                        <div class="col-12">
-                            <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address">
-                        </div>
-                        <div class="col-md-5">
-                            <label for="city" class="form-label">City</label>
-                            <input type="text" class="form-control" id="city" name="city">
-                        </div>
-                        <div class="col-md-5">
-                            <label for="country" class="form-label">Country</label>
-                            <input type="text" class="form-control" id="country" name="country">
-                        </div>
-                        <div class="col-md-2">
-                            <label for="postcode" class="form-label">Postcode</label>
-                            <input type="text" class="form-control" id="postcode" name="postcode">
-                        </div>
-                        </div>
-                        <div class="row g-3">
-                        <div class="col-md-6">
-                            <label for="longitude" class="form-label">Longitude</label>
-                            <input type="text" class="form-control" id="longitude" name="longitude">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="latitude" class="form-label">Latitude</label>
-                            <input type="text" class="form-control" id="latitude" name="latitude">
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-dark">Add Sighting</button>
-            </form>
-        </div>
+
     </div>
 </div>
 <!-- End main body -->

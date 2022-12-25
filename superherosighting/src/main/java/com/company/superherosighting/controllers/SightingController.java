@@ -9,15 +9,22 @@ import com.company.superherosighting.entities.Organisation;
 import com.company.superherosighting.entities.Sighting;
 import com.company.superherosighting.entities.Superherovillain;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Valid;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class SightingController {
@@ -34,10 +41,12 @@ public class SightingController {
     OrganisationDaoDB orgDao;
 
     boolean addNewHeroOption;
+    Set<ConstraintViolation<Superherovillain>> shvErrors = new HashSet<>();
+    Set<ConstraintViolation<Location>> locErrors = new HashSet<>();
 
     @GetMapping("sightings")
     public String displaySightings(Model model) {
-       // addNewHeroOption = false;
+        addNewHeroOption = true;
         List<Sighting> sightings = sightingDao.getAllSightings();
         List<Superherovillain> superherovillains = superDao.getAllSuperherovillain();
         List<Location> locations = locationDao.getAllLocations();
@@ -47,13 +56,20 @@ public class SightingController {
         model.addAttribute("superherovillains", superherovillains);
         model.addAttribute("locations", locations);
         model.addAttribute("organisations", organisations);
-       // model.addAttribute("addNewHeroOption", addNewHeroOption);
+       // model.addAttribute("addHeroBool", addNewHeroOption);
+        model.addAttribute("shvErrors", shvErrors);
+        model.addAttribute("locErrors", locErrors);
         return "sightings";
     }
 
     @PostMapping("addSighting")
     public String addSighting(Sighting sighting, HttpServletRequest request) {
+
         String addHero = request.getParameter("addNewHeroOption");
+        // System.out.println(addLocation);
+       // System.out.println(addHero);
+       // System.out.println(addNewHeroOption);
+       // System.out.println("something");
         if (addHero != null) {
             Superherovillain shv = new Superherovillain();
             shv.setName(request.getParameter("heroName"));
@@ -73,14 +89,25 @@ public class SightingController {
             List<Location> locationsSightedAt = new ArrayList<>();
             shv.setLocationsSightedAt(locationsSightedAt);
 
-            superDao.addSuperherovillain(shv);
-            sighting.setSuperherovillain(shv);
+            Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+            shvErrors = validate.validate(shv);
+            if(shvErrors.isEmpty()) {
+                superDao.addSuperherovillain(shv);
+                sighting.setSuperherovillain(shv);
+            } else {
+                return "redirect:/sightings";
+            }
+
         } else {
             String superId = request.getParameter("superId");
-            sighting.setSuperherovillain(superDao.getSuperherovillainById(Integer.parseInt(superId)));
+            Superherovillain shv = superDao.getSuperherovillainById(Integer.parseInt(superId));
+            sighting.setSuperherovillain(shv);
         }
         String addLocation = request.getParameter("addNewLocationOption");
+        System.out.println(addLocation);
+
         if(addLocation != null){
+            System.out.println("hit");
             Location loc = new Location();
             loc.setName(request.getParameter("locationName"));
             loc.setDescription(request.getParameter("locationDescription"));
@@ -88,14 +115,33 @@ public class SightingController {
             loc.setCity(request.getParameter("city"));
             loc.setCountry(request.getParameter("country"));
             loc.setPostcode(request.getParameter("postcode"));
-            System.out.println(request.getParameter("longitude"));
-            //loc.setLongitude(Double.parseDouble(request.getParameter("longitude")));
-            //loc.setLatitude(Double.parseDouble(request.getParameter("latitude")));
-            locationDao.addLocation(loc);
-            sighting.setLocation(loc);
+            if(request.getParameter("longitude") != null) {
+                try {
+                    loc.setLongitude(Double.parseDouble(request.getParameter("longitude")));
+                } catch (NumberFormatException e) {
+
+                }
+            }
+            if (request.getParameter("latitude") != null) {
+                try {
+                    loc.setLatitude(Double.parseDouble(request.getParameter("latitude")));
+                } catch (NumberFormatException e) {
+
+                }
+            }
+
+            Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+            locErrors = validate.validate(loc);
+            if(locErrors.isEmpty()) {
+                locationDao.addLocation(loc);
+                sighting.setLocation(loc);
+            } else {
+                return "redirect:/sightings";
+            }
         } else {
             String locationId = request.getParameter("locationId");
-            sighting.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
+            Location loc = locationDao.getLocationById(Integer.parseInt(locationId));
+            sighting.setLocation(loc);
         }
         sighting.setTimeSighted(LocalDateTime.now());
         sightingDao.addSighting(sighting);

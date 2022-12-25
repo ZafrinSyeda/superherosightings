@@ -1,5 +1,8 @@
 package com.company.superherosighting.entities;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -9,8 +12,14 @@ import java.util.Objects;
  */
 public class Superherovillain {
     private int id;
+    @NotBlank(message = "Hero/ Villain name cannot be blank")
+    @Size(max = 60, message="Hero/ Villain name must be less than 60 characters.")
     private String name;
+
+    @Size(max=300, message = "Hero description must be less than 300 characters.")
     private String description;
+
+    @Size(max=100, message = "Superpower must be less than 100 characters.")
     private String superpower;
     /**
      * is true if they are listed as a hero, and is false if they are a villain
