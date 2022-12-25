@@ -1,104 +1,225 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-  <title>Sightings</title>
+    <title>Sightings</title>
 </head>
 <body>
 <!-- Main Body of Page -->
 <!-- Beginning of navigation menu -->
 <div>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">HERO Superhero Sightings</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item ">
-          <a class="nav-link" href="/">Home</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="sightings">Sightings</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="superheroes">Superheroes</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="locations">Locations</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="organisations">Organisations</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">HERO Superhero Sightings</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="sightings">Sightings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="superheroes">Superheroes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="locations">Locations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="organisations">Organisations</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
-  <!-- end of navbar -->
+<!-- end of navbar -->
 <div class="container">
-  <div class="row m-4">
-    <h1>Sightings </h1>
-    </p>
-    <p/>
-  </div>
-  <div>
-    <div class="row">
-        <div class="card w-100" th:each="sighting : ${sightings}">
-          <div class="card-body">
-            <p class="text-right font-weight-light"
-               th:text="${#temporals.formatISO(sighting.timeSighted)}"></p>
-            <h5 class="card-title"
-                th:text="${sighting.superherovillain.name}">
-            </h5>
-            <p class="card-text" th:text="'Location: ' +${sighting.location.name} +', ' +${sighting.location.address}+', '+${sighting.location.city}+', '+${sighting.location.country}+', '+${sighting.location.postcode}"></p>
-            <p class="card-text" th:text="'Coordinates: ' + ${sighting.location.longitude} +', ' +${sighting.location.latitude}"></p>
-            <a href="#" class="btn btn-sm btn-dark">Edit</a>
-            <a href="#" class="btn btn-sm btn-dark">Delete</a>
-          </div>
-      </div>
-      <p/>
+    <div class="row m-4">
+        <h1>Sightings </h1>
+        </p>
+        <p/>
     </div>
-  </div>
-  <div >
-    <h3>Have you seen a superhero or supervillain recently?</h3>
-    <h4>Submit what you saw here: </h4>
-    <p/>
-    <div class="center-block">
-    <form action="addSighting" method="POST" class = 'card p-3 bg-light'>
-      <div class="form-group ">
-        <label for="superherovillain">Superhero/ Villain:
-        </label>
-        <select id="superherovillain" name="superId" class="form-control">
-          <option th:each="shv : ${superherovillains}"
-                  th:value="${shv.id}"
-                  th:text="${shv.name}">Superhero/Villain Name</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="location">Location:
-        </label>
-        <select id="location" name="locationId" class="form-control">
-          <option th:each="loc : ${locations}"
-                  th:value="${loc.id}"
-                  th:text="${loc.name}">Superhero/Villain Name</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-dark">Add Sighting</button>
-    </form>
+    <div>
+        <div class="row">
+            <div class="card w-100" th:each="sighting : ${sightings}">
+                <div class="card-body">
+                    <p class="text-right font-weight-light"
+                       th:text="${#temporals.formatISO(sighting.timeSighted)}"></p>
+                    <h5 class="card-title"
+                        th:text="${sighting.superherovillain.name}">
+                    </h5>
+                    <p class="card-text"
+                       th:text="'Location: ' +${sighting.location.name} +', ' +${sighting.location.address}+', '+${sighting.location.city}+', '+${sighting.location.country}+', '+${sighting.location.postcode}"></p>
+                    <p class="card-text"
+                       th:text="'Coordinates: ' + ${sighting.location.longitude} +', ' +${sighting.location.latitude}"></p>
+                    <a href="#" class="btn btn-sm btn-dark">Edit</a>
+                    <a href="#" class="btn btn-sm btn-dark">Delete</a>
+                </div>
+            </div>
+            <p/>
+        </div>
     </div>
-  </div>
+    <div>
+        <h3>Have you seen a superhero or supervillain recently?</h3>
+        <h4>Submit what you saw here: </h4>
+        <p/>
+        <div class="center-block">
+            <form action="addSighting" method="POST" class='card p-3 bg-light'>
+                <div class="form-group ">
+                    <label for="superherovillain">Superhero/ Villain:
+                    </label>
+                    <select id="superherovillain" name="superId" class="form-control">
+                        <option th:each="shv : ${superherovillains}"
+                                th:value="${shv.id}"
+                                th:text="${shv.name}">Superhero/Villain Name
+                        </option>
+                    </select>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="true" name="addNewHeroOption" id="addNewHero" th:checked="${addNewHeroOption} ? 'checked'">
+                    <label class="form-check-label" for="addNewHero">
+                        Add a New Hero
+                    </label>
+                </div>
+                <div id="addHeroForm" class="form-group">
+                    <label for="heroName">
+                         Name</label>
+                    <input type="text" name="heroName"
+                           id="heroName" class="form-control"/>
+                    <label for="heroDesc">
+                        Description</label>
+                    <input type="textarea" name="heroDesc"
+                           id="heroDesc" class="form-control"/>
+                    <label for="superpower">
+                        Superpower</label>
+                    <input type="text" name="superpower"
+                           id="superpower" class="form-control"/>
+                    <label for="organisation">Organisation:
+                    </label>
+                    <select id="organisation" name="organisationId" class="form-control">
+                        <option th:each="org : ${organisations}"
+                                th:value="${org.id}"
+                                th:text="${org.name}">Organisation Name
+                        </option>
+                    </select>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" id="isHero" name="isHero" th:checked="${isHero}">
+                        <label class="form-check-label" for="isHero">
+                            Tick here if they're a hero (leave it blank if they're a villain)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location:
+                    </label>
+                    <select id="location" name="locationId" class="form-control">
+                        <option th:each="loc : ${locations}"
+                                th:value="${loc.id}"
+                                th:text="${loc.name}">Superhero/Villain Name
+                        </option>
+                    </select>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" name="addNewLocationOption" id="addNewLocation" th:checked="${addNewLocationOption} ? 'checked'">
+                        <label class="form-check-label" for="addNewLocation">
+                            Add a New Location
+                        </label>
+                    </div>
+                    <div id="addLocationForm" class="form-group">
+                        <label for="locationName">
+                            Name</label>
+                        <input type="text" name="locationName"
+                               id="locationName" class="form-control"/>
+                        <label for="locationDescription">
+                            Description</label>
+                        <input type="textarea" name="locationDescription"
+                               id="locationDescription" class="form-control"/>
+                        <div class="row g-3">
+                        <div class="col-12">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address">
+                        </div>
+                        <div class="col-md-5">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" name="city">
+                        </div>
+                        <div class="col-md-5">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" class="form-control" id="country" name="country">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="postcode" class="form-label">Postcode</label>
+                            <input type="text" class="form-control" id="postcode" name="postcode">
+                        </div>
+                        </div>
+                        <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="longitude" class="form-label">Longitude</label>
+                            <input type="text" class="form-control" id="longitude" name="longitude">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="latitude" class="form-label">Latitude</label>
+                            <input type="text" class="form-control" id="latitude" name="latitude">
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-dark">Add Sighting</button>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- End main body -->
 <!-- needed to run bootstrap -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<!-- my own jQuery/ JavaScript scripts for extra functionality -->
+<script>
+$(document).ready(function(){
+    $("#addHeroForm").hide();
+});
+
+$(document).ready(function() {
+    $('input[name="addNewHeroOption"]').change(function() {
+        if($("#addNewHero").is(':checked')){
+            $("#addHeroForm").show();
+        }else{
+            $("#addHeroForm").hide();
+        }
+    });
+});
+
+  $(document).ready(function(){
+    $("#addLocationForm").hide();
+});
+
+$(document).ready(function() {
+    $('input[name="addNewLocationOption"]').change(function() {
+        if($("#addNewLocation").is(':checked')){
+            $("#addLocationForm").show();
+        }else{
+            $("#addLocationForm").hide();
+        }
+    });
+});
+
+
+</script>
 </body>
 </html>;
