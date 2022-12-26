@@ -43,6 +43,42 @@
   <!-- end of navbar -->
 <div class="container">
   <div class="row m-4">
+    <h2>Edit Sighting</h2>
+  </div>
+  <form action="editSighting" method="POST" class='card p-3 bg-light'>
+    <div class="form-group ">
+      <label for="superherovillain">Superhero/ Villain:
+      </label>
+      <select id="superherovillain" name="superId" class="form-control">
+        <option th:each="shv : ${superherovillains}"
+                th:value="${shv.id}"
+                th:text="${shv.name}"
+                th:selected="${sighting.superherovillain.id == shv.id}">Superhero/Villain Name
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="location">Location:
+      </label>
+      <select id="location" name="locationId" class="form-control">
+        <option th:each="loc : ${locations}"
+                th:value="${loc.id}"
+                th:text="${loc.name}"
+                th:selected="${sighting.location.id == loc.id}"
+                >Location Name
+        </option>
+      </select>
+      <div>
+      </div>
+    </div>
+    <input type="hidden" name="id" th:value="${sighting.id}"/>
+    <input type="hidden" name="timeSighted" th:value="${sighting.timeSighted}"/>
+    <button type="submit" class="btn btn-dark">Edit Sighting</button>
+  </form>
+</div>
+</div>
+</div>
+</div>
 
 <!-- End main body -->
 <!-- needed to run bootstrap -->

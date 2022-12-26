@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -46,7 +47,7 @@ public class SightingController {
 
     @GetMapping("sightings")
     public String displaySightings(Model model) {
-        addNewHeroOption = true;
+        //addNewHeroOption = true;
         List<Sighting> sightings = sightingDao.getAllSightings();
         List<Superherovillain> superherovillains = superDao.getAllSuperherovillain();
         List<Location> locations = locationDao.getAllLocations();
@@ -152,6 +153,34 @@ public class SightingController {
     @GetMapping("deleteSighting")
     public String deleteStudent(Integer id) {
         sightingDao.deleteSighting(id);
+        return "redirect:/sightings";
+    }
+
+    @GetMapping("editSighting")
+    public String editSighting(Integer id, Model model) {
+        Sighting sighting = sightingDao.getSightingById(id);
+        List<Superherovillain> superherovillains = superDao.getAllSuperherovillain();
+        List<Location> locations = locationDao.getAllLocations();
+        List<Organisation> organisations = orgDao.getAllOrganisations();
+
+        model.addAttribute("sighting", sighting);
+        model.addAttribute("superherovillains", superherovillains);
+        model.addAttribute("locations", locations);
+        model.addAttribute("organisations", organisations);
+        return "editSighting";
+    }
+
+    @PostMapping("editSighting")
+    public String postEditSighting(Sighting sighting, HttpServletRequest request) {
+        String locationId = request.getParameter("locationId");
+        String superId = request.getParameter("superId");
+        String timeSighted = request.getParameter("timeSighted");
+
+        sighting.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
+        sighting.setSuperherovillain(superDao.getSuperherovillainById(Integer.parseInt(superId)));
+        sighting.setTimeSighted(LocalDateTime.parse(timeSighted));
+        sightingDao.editSighting(sighting);
+
         return "redirect:/sightings";
     }
 
