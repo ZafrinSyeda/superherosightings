@@ -171,7 +171,7 @@
     <div>
         <h3>Sightings</h3>
         <div class="row">
-            <div class="card w-100" th:each="sighting : ${sightings}">
+            <div class="card w-100" th:each="sighting, status : ${sightings}">
                 <div class="card-body">
                     <p class="text-right font-weight-light"
                        th:text="${#temporals.formatISO(sighting.timeSighted)}"></p>
@@ -183,11 +183,13 @@
                     <p class="card-text"
                        th:text="'Coordinates: ' + ${sighting.location.longitude} +', ' +${sighting.location.latitude}"></p>
                     <a href="#" th:href="@{/editSighting(id=${sighting.id})}" class="btn btn-sm btn-dark">Edit</a>
-                    <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#deleteModal">
+                    <button class="btn btn-sm btn-dark" data-toggle="modal" th:attr="data-target='#deleteModal' + ${status.index}">
                         Delete
                     </button>
+
+
                     <!-- Modal -->
-                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal fade" th:id="deleteModal+${status.index}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">

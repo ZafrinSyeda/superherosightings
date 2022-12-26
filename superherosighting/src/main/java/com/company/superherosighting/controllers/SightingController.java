@@ -151,7 +151,7 @@ public class SightingController {
     }
 
     @GetMapping("deleteSighting")
-    public String deleteStudent(Integer id) {
+    public String editSighting(Integer id) {
         sightingDao.deleteSighting(id);
         return "redirect:/sightings";
     }

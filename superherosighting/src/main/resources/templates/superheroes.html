@@ -55,7 +55,7 @@
   </div>
   <div>
     <div class="row">
-      <div class="card w-100" th:each="superhero : ${superheroes}">
+      <div class="card w-100" th:each="superhero, status : ${superheroes}">
         <div class="card-body">
           <h5 class="card-title"
               th:text="${superhero.name}">
@@ -66,8 +66,33 @@
           <ul th:each="location : ${superhero.locationsSightedAt}">
             <li th:text="${location.name}"></li>
           </ul>
-          <a href="#" class="btn btn-sm btn-dark">Edit</a>
-          <a href="#" class="btn btn-sm btn-dark">Delete</a>
+          <!-- <a href="#" th:href="@{/editSighting(id=${sighting.id})}" class="btn btn-sm btn-dark">Edit</a> -->
+          <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" th:attr="data-target='#deleteHeroModal' + ${status.index}">
+            Delete
+          </button>
+          <!-- Modal -->
+          <div class="modal fade" th:id="deleteHeroModal+${status.index}" tabindex="-1" role="dialog" aria-labelledby="deleteModalHeroLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="heroDeleteModalLabel">Deleting Superhero...</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you wish to delete this superhero?
+                  <div>
+                    <i th:text="${superhero.name}"></i>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                  <a href="#" th:href="@{/deleteSuperherovillain(id=${superhero.id})}" class="btn btn-danger">Delete Superhero</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <p/>
@@ -80,7 +105,7 @@
   </div>
   <div>
     <div class="row">
-      <div class="card w-100" th:each="supervillain : ${supervillains}">
+      <div class="card w-100" th:each="supervillain, status : ${supervillains}">
         <div class="card-body">
           <h5 class="card-title"
               th:text="${supervillain.name}">
@@ -91,8 +116,33 @@
           <ul th:each="location : ${supervillain.locationsSightedAt}">
             <li th:text="${location.name}"></li>
           </ul>
-          <a href="#" class="btn btn-sm btn-dark">Edit</a>
-          <a href="#" class="btn btn-sm btn-dark">Delete</a>
+          <!-- <a href="#" th:href="@{/editSighting(id=${sighting.id})}" class="btn btn-sm btn-dark">Edit</a> -->
+          <button type="button" class="btn btn-sm btn-dark" data-toggle="modal"  th:attr="data-target='#deleteVillainModal' + ${status.index}">
+            Delete
+          </button>
+          <!-- Modal -->
+          <div class="modal fade" th:id="deleteVillainModal+${status.index}" tabindex="-1" role="dialog" aria-labelledby="deleteVillainModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteVillainModalLabel">Deleting Supervillain...</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you wish to delete this supervillain?
+                  <div>
+                    <i th:text="${supervillain.name}"></i>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                  <a href="#" th:href="@{/deleteSuperherovillain(id=${supervillain.id})}" class="btn btn-danger">Delete Supervillain</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <p/>

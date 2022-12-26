@@ -1,7 +1,6 @@
 package com.company.superherosighting.controllers;
 
 import com.company.superherosighting.dao.SuperherovillainDaoDB;
-import com.company.superherosighting.entities.Sighting;
 import com.company.superherosighting.entities.Superherovillain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class SuperheroevillainController {
+public class SuperherovillainController {
     @Autowired
     SuperherovillainDaoDB superDao;
 
@@ -22,5 +21,11 @@ public class SuperheroevillainController {
         model.addAttribute("superheroes", superheroes);
         model.addAttribute("supervillains", supervillains);
         return "superheroes";
+    }
+
+    @GetMapping("deleteSuperherovillain")
+    public String deleteSuperherovillain(Integer id) {
+        superDao.deleteSuperherovillainById(id);
+        return "redirect:/superheroes";
     }
 }
