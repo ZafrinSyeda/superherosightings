@@ -183,13 +183,40 @@
                     <p class="card-text"
                        th:text="'Coordinates: ' + ${sighting.location.longitude} +', ' +${sighting.location.latitude}"></p>
                     <a href="#" class="btn btn-sm btn-dark">Edit</a>
-                    <a href="#" class="btn btn-sm btn-dark">Delete</a>
+                    <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#deleteModal">
+                        Delete
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Deleting Sighting...</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you wish to delete this sighting?
+                                    <div>
+                                    <i th:text="${sighting.superherovillain.name + ' sighted at ' + sighting.location.name}"></i>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                    <a href="#" th:href="@{/deleteSighting(id=${sighting.id})}" class="btn btn-danger">Delete Sighting</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end of modal -->
                 </div>
             </div>
             <p/>
         </div>
 
     </div>
+
 </div>
 <!-- End main body -->
 <!-- needed to run bootstrap -->
