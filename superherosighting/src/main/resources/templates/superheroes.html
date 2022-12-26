@@ -61,12 +61,13 @@
               th:text="${superhero.name}">
           </h5>
           <p class="card-text" th:text="'Description: ' +${superhero.description}"></p>
+          <p class="card-text" th:text="'Superpower: ' +${superhero.superpower}"></p>
           <p class="card-text" th:if="${superhero.organisation} != null" th:text="'Organisation: ' +${superhero.organisation.name}"></p>
           <p class="card-text">Locations Sighted At:</p>
           <ul th:each="location : ${superhero.locationsSightedAt}">
             <li th:text="${location.name}"></li>
           </ul>
-          <!-- <a href="#" th:href="@{/editSighting(id=${sighting.id})}" class="btn btn-sm btn-dark">Edit</a> -->
+          <a href="#" th:href="@{/editSuperhero(id=${superhero.id})}" class="btn btn-sm btn-dark">Edit</a>
           <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" th:attr="data-target='#deleteHeroModal' + ${status.index}">
             Delete
           </button>
@@ -111,12 +112,13 @@
               th:text="${supervillain.name}">
           </h5>
           <p class="card-text" th:text="'Description: ' + ${supervillain.description}"></p>
+          <p class="card-text" th:text="'Superpower: ' + ${supervillain.superpower}"></p>
           <p class="card-text" th:if="${supervillain.organisation} != null" th:text="'Organisation: ' +${supervillain.organisation.name}"></p>
           <p class="card-text">Locations Sighted At:</p>
           <ul th:each="location : ${supervillain.locationsSightedAt}">
             <li th:text="${location.name}"></li>
           </ul>
-          <!-- <a href="#" th:href="@{/editSighting(id=${sighting.id})}" class="btn btn-sm btn-dark">Edit</a> -->
+          <a href="#" th:href="@{/editSuperhero(id=${supervillain.id})}" class="btn btn-sm btn-dark">Edit</a>
           <button type="button" class="btn btn-sm btn-dark" data-toggle="modal"  th:attr="data-target='#deleteVillainModal' + ${status.index}">
             Delete
           </button>
@@ -137,7 +139,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                   <a href="#" th:href="@{/deleteSuperherovillain(id=${supervillain.id})}" class="btn btn-danger">Delete Supervillain</a>
                 </div>
               </div>

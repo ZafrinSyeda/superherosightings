@@ -50,7 +50,7 @@
     </div>
     <div>
       <div class="row">
-        <div class="card w-100" th:each="location : ${locations}">
+        <div class="card w-100" th:each="location, status : ${locations}">
           <div class="card-body">
             <h5 class="card-title"
                 th:text="${location.name}">
@@ -61,13 +61,38 @@
             <p class="card-text" th:text="'Country: ' +${location.country}"/>
             <p class="card-text" th:text="'Postcode: ' +${location.postcode}"/>
             <p class="card-text" th:text="'Coordinates: ' + ${location.longitude} +', ' +${location.latitude}"></p>
-            <a href="#" class="btn btn-sm btn-dark">Edit</a>
-            <a href="#" class="btn btn-sm btn-dark">Delete</a>
+            <a href="#" th:href="@{/editLocation(id=${location.id})}" class="btn btn-sm btn-dark">Edit</a>
+            <button type="button" class="btn btn-sm btn-dark" data-toggle="modal"  th:attr="data-target='#deleteLocationModal' + ${status.index}">
+              Delete
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" th:id="deleteLocationModal+${status.index}" tabindex="-1" role="dialog" aria-labelledby="deleteLocationModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteVillainModalLabel">Deleting Location...</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you wish to delete this location?
+                    <div>
+                      <i th:text="${location.name}"></i>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a href="#" th:href="@{/deleteLocation(id=${location.id})}" class="btn btn-danger">Delete Location</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <p/>
       </div>
-
+    </div>
 </div>
 <!-- End main body -->
 <!-- needed to run bootstrap -->
