@@ -70,3 +70,6 @@ FROM location l
 JOIN superherovillain_location sl 
 ON sl.locationId = l.locationId 
 WHERE sl.locationid = 7; 
+
+select * from superherovillain_location 
+order by timesighted desc;  

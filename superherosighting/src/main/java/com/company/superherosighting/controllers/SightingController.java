@@ -57,7 +57,7 @@ public class SightingController {
         model.addAttribute("superherovillains", superherovillains);
         model.addAttribute("locations", locations);
         model.addAttribute("organisations", organisations);
-       // model.addAttribute("addHeroBool", addNewHeroOption);
+
         model.addAttribute("shvErrors", shvErrors);
         model.addAttribute("locErrors", locErrors);
         return "sightings";
@@ -67,10 +67,6 @@ public class SightingController {
     public String addSighting(Sighting sighting, HttpServletRequest request) {
 
         String addHero = request.getParameter("addNewHeroOption");
-        // System.out.println(addLocation);
-       // System.out.println(addHero);
-       // System.out.println(addNewHeroOption);
-       // System.out.println("something");
         if (addHero != null) {
             Superherovillain shv = new Superherovillain();
             shv.setName(request.getParameter("heroName"));
@@ -182,6 +178,15 @@ public class SightingController {
         sightingDao.editSighting(sighting);
 
         return "redirect:/sightings";
+    }
+
+    @GetMapping("sightingDetail")
+    public String sightingDetail(Integer id, Model model) {
+        Sighting sighting = sightingDao.getSightingById(id);
+        System.out.println(sighting.getSuperherovillain().getOrganisation().getName());
+
+        model.addAttribute("sighting", sighting);
+        return "sightingDetail";
     }
 
 

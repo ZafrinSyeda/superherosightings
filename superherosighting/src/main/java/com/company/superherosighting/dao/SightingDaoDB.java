@@ -82,7 +82,7 @@ public class SightingDaoDB implements SightingDao{
      */
     private Superherovillain getSightingSuperherovillain(int id) {
         /**
-         * uses a join clause to get all the attributes of the superherovillain lineked to the sighting
+         * uses a join clause to get all the attributes of the superherovillain linked to the sighting
          */
         final String SELECT_SUPERHEROVILLAIN_FOR_SIGHTING = "select sh.*\n" +
                 "from superherovillain sh\n" +
@@ -92,7 +92,8 @@ public class SightingDaoDB implements SightingDao{
         /**
          * uses queryForObject since only one superhero is returned (one-to-many)
          */
-        return jdbc.queryForObject(SELECT_SUPERHEROVILLAIN_FOR_SIGHTING, new SuperherovillainDaoDB.SuperherovillainMapper(), id);
+        Superherovillain superherovillain = jdbc.queryForObject(SELECT_SUPERHEROVILLAIN_FOR_SIGHTING, new SuperherovillainDaoDB.SuperherovillainMapper(), id);
+        return superherovillain;
     }
 
     /**

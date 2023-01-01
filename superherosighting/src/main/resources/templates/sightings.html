@@ -182,8 +182,9 @@
                        th:text="'Location: ' +${sighting.location.name} +', ' +${sighting.location.address}+', '+${sighting.location.city}+', '+${sighting.location.country}+', '+${sighting.location.postcode}"></p>
                     <p class="card-text"
                        th:text="'Coordinates: ' + ${sighting.location.longitude} +', ' +${sighting.location.latitude}"></p>
+                    <a href="#" th:href="@{/sightingDetail(id=${sighting.id})}" class="btn btn-sm btn-dark">Details</a>
                     <a href="#" th:href="@{/editSighting(id=${sighting.id})}" class="btn btn-sm btn-dark">Edit</a>
-                    <button class="btn btn-sm btn-dark" data-toggle="modal" th:attr="data-target='#deleteModal' + ${status.index}">
+                    <button class="btn btn-sm btn-danger" data-toggle="modal" th:attr="data-target='#deleteModal' + ${status.index}">
                         Delete
                     </button>
 

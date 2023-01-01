@@ -61,7 +61,7 @@ values("Invincible", "Mark Grayson, from the Invincible comics", "Superhuman", t
 ("Wonder Woman", "Diana Prince, from the Wonder Woman comics", "Superhuman", true, 2),
 ("Magneto", "Max Eisenhardt from the X-men comics ", "Magnetism Manipulation", false, 4 ),
 ("The Riddler", "Edward Nashton from the Batman comics ", "Intellect", false, 5),
-("Poison Ivy", "Dr Pamela Lillian Isley, from the Batman comics", "Plant Manipulation",false, null);
+("Poison Ivy", "Dr Pamela Lillian Isley, from the Batman comics", "Plant Manipulation",false, 5);
 
 
 insert into location(name, address, city, country, postcode, longitude, latitude) 
