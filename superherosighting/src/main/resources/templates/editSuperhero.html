@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- This page is used to edit a pre-existing superhero/ villain -->
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -47,8 +49,10 @@
     <div class="row m-4">
         <h2>Edit Superhero/ Villain</h2>
     </div>
+    <!-- beginning of the edit superhero form -->
     <form action="editSuperhero" method="POST" class='card p-3 bg-light'>
         <div class="form-group">
+            <!-- uses th:value to represent the original values that will be presented in the form -->
             <label for="heroName">
                 Name</label>
             <input type="text" name="heroName"
@@ -63,6 +67,7 @@
                    id="superpower" class="form-control" th:value="${shv.superpower}"/>
         <label for="organisation">Organisation:
             </label>
+            <!-- uses the th:selected to present the initially selected organisation -->
             <select id="organisation" name="organisationId" class="form-control">
                 <option th:each="org : ${organisations}"
                         th:value="${org.id}"
@@ -72,6 +77,7 @@
                 </option>
             </select>
             <div class="form-check">
+                <!-- uses th:checked to select/ unselect this checkbox whether the person is a hero/ villain respectively -->
                 <input class="form-check-input" type="checkbox" value="true" id="isHero" name="isHero"
                        th:checked="${shv.isHero}">
                 <label class="form-check-label" for="isHero">
@@ -81,11 +87,9 @@
         </div>
         <input type="hidden" name="id" th:value="${shv.id}"/>
         <input type="hidden" name="locations" th:value="${shv.locationsSightedAt}"/>
-        <!--<div th:each="loc : ${shv.locationsSightedAt}" name="locationId">
-            <input type="hidden" th:value="${loc.id}"/>
-        </div> -->
         <button type="submit" class="btn btn-dark">Edit Superhero/ villain</button>
     </form>
+    <!-- end of the edit superhero form -->
 </div>
 <!-- End main body -->
 <!-- needed to run bootstrap -->

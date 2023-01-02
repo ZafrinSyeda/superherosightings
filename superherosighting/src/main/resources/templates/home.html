@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- represents the intial homepage that the user views - this is not a static page as it uses data from
+ the database -->
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -44,6 +46,7 @@
 </div>
 <!-- end of navbar -->
 <div class="container">
+    <!-- information about the organisation -->
     <div class="row m-4">
         <h2>IS IT A BIRD? IS IT A PLANE? NO, IT’S... </h2>
 
@@ -56,9 +59,13 @@
         </p>
         <p/>
     </div>
+    <!-- end of the information about the organisation -->
+
+    <!-- displays the 10 most recent sightings -->
     <div>
         <h3>Our Most Recent Sightings</h3>
         <div class="row">
+            <!-- goes through each sighting and prevents them within a bootstrap card format -->
             <div class="col-sm-6" th:each="sighting : ${sightings}">
                 <div class="card">
                     <div class="card-body">
@@ -67,12 +74,17 @@
                         <h5 class="card-title"
                             th:text="${sighting.superherovillain.name + ' sighted at ' + sighting.location.name}">
                             superhero</h5>
+                        <div class="text-center">
+                            <!-- can be selected to view the specific detail of the sighting presented -->
+                        <a href="#" th:href="@{/sightingDetail(id=${sighting.id})}" class="btn btn-sm btn-dark ">Details</a>
+                        </div>
                     </div>
                 </div>
                 <p/>
             </div>
         </div>
     </div>
+    <!-- end of the display of the 10 most recent sightings -->
 </div>
 <!-- End main body -->
 <!-- needed to run bootstrap -->

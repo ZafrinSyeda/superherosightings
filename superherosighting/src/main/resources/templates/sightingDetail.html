@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- used to present specific detail about some selected sighting -->
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -55,9 +57,6 @@
       </p>
       <p class="card-text"
          th:text="'Description: ' + ${sighting.superherovillain.description}">
-      </p>
-      <p class="card-text"
-         th:if="${sighting.superherovillain.organisation} != null" th:text="'Organisation: ' +${sighting.superherovillain.organisation.name}">
       </p>
       <p class="card-text"
          th:text="'Location: ' +${sighting.location.name} +', ' +${sighting.location.address}+', '+${sighting.location.city}+', '+${sighting.location.country}+', '+${sighting.location.postcode}"></p>

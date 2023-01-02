@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- This page represents the editing form the user may use to edit an existing location within the database -->
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -45,10 +47,12 @@
     <div class="row m-4">
         <h2>Edit Location</h2>
     </div>
+    <!-- beginning of the editing form -->
     <form action="editLocation" method="POST" class='card p-3 bg-light'>
         <div class="form-group">
             <label for="locationName">
                 Name</label>
+            <!-- the form will already present the values that the location was initially set to-->
             <input type="text" name="locationName"
                    id="locationName" class="form-control" th:value="${loc.name}"/>
             <label for="locationDescription">
@@ -84,9 +88,11 @@
                 </div>
             </div>
         </div>
+        <!-- hidden id value needed by the backend to identify which location object is being edited -->
         <input type="hidden" name="id" th:value="${loc.id}"/>
         <button type="submit" class="btn btn-dark">Edit Location</button>
     </form>
+    <!-- end of the editing form -->
 </div>
 
 <!-- End main body -->

@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- This page is used to represent the different locations that is stored within the database -->
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -48,8 +50,12 @@
       </p>
       <p/>
     </div>
+  <!-- beginning of the locations list -->
     <div>
       <div class="row">
+        <!-- goes through each location and presents them with a card format  -->
+        <!-- status is used to be combined with the 'are you sure you wish to delete x' modal so that a unique
+         modal with the specific details of each location can be generated -->
         <div class="card w-100" th:each="location, status : ${locations}">
           <div class="card-body">
             <h5 class="card-title"
@@ -61,11 +67,14 @@
             <p class="card-text" th:text="'Country: ' +${location.country}"/>
             <p class="card-text" th:text="'Postcode: ' +${location.postcode}"/>
             <p class="card-text" th:text="'Coordinates: ' + ${location.longitude} +', ' +${location.latitude}"></p>
+            <!-- used to edit the location being presented  -->
             <a href="#" th:href="@{/editLocation(id=${location.id})}" class="btn btn-sm btn-dark">Edit</a>
+            <!-- used to present the user with the a modal to validate whether they want to delete the location or not  -->
             <button type="button" class="btn btn-sm btn-dark" data-toggle="modal"  th:attr="data-target='#deleteLocationModal' + ${status.index}">
               Delete
             </button>
-            <!-- Modal -->
+            <!-- Modal for deleting the location -->
+            <!-- the id combines a name and the status id of the location -->
             <div class="modal fade" th:id="deleteLocationModal+${status.index}" tabindex="-1" role="dialog" aria-labelledby="deleteLocationModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -83,16 +92,19 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <!-- if the user chooses to delete the location -->
                     <a href="#" th:href="@{/deleteLocation(id=${location.id})}" class="btn btn-danger">Delete Location</a>
                   </div>
                 </div>
               </div>
             </div>
+            <!-- end of modal -->
           </div>
         </div>
         <p/>
       </div>
     </div>
+  <!-- end of the locations list -->
 </div>
 <!-- End main body -->
 <!-- needed to run bootstrap -->
@@ -100,4 +112,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
-</html>;
+</html>

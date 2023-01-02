@@ -10,11 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+/**
+ * Provides the relevant operations relating to presenting organisation items
+ */
 @Controller
 public class OrganisationController {
     @Autowired
     OrganisationDaoDB orgDao;
 
+    /**
+     * presents the organisation page and displays all the organisations within the database
+     * @param model the organisation webpage
+     * @return the organisation page
+     */
     @GetMapping("organisations")
     public String displayOrganisations(Model model) {
         List<Organisation> organisations = orgDao.getAllOrganisations();

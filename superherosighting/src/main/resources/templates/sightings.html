@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- this page is used to view all the sightings as well as providing a section where a new sighting can be added -->
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -48,12 +50,14 @@
         <h1>Sightings </h1>
         </p>
         <p/>
+        <!-- beginning of the add new sighting form -->
         <div >
             <h3>Have you seen a superhero or supervillain recently?</h3>
             <h4>Submit what you saw here: </h4>
             <p/>
             <div class="center-block">
                 <form action="addSighting" method="POST" class='card p-3 bg-light'>
+                    <!-- where errors are displayed at the top of the page -->
                     <div class="text-center"
                          th:if="${!shvErrors.isEmpty()}">
                         <p class="alert alert-danger" th:each="error : ${shvErrors}"
@@ -64,7 +68,9 @@
                         <p class="alert alert-danger" th:each="error : ${locErrors}"
                            th:text="${error.message}">Error message</p>
                     </div>
+                    <!-- end of error section -->
 
+                    <!-- section for adding an existing superhero to the sighting as a drop-down list -->
                     <div class="form-group ">
                         <label for="superherovillain">Superhero/ Villain:
                         </label>
@@ -75,12 +81,18 @@
                             </option>
                         </select>
                     </div>
+                    <!-- end of section for adding an existing superhero to the sighting -->
+
+                    <!-- checkbox to add a new hero for the sighting or not -->
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="true" name="addNewHeroOption" id="addNewHero" th:checked="${addHeroBool}" />
                         <label class="form-check-label" for="addNewHero">
                             Add a New Hero
                         </label>
                     </div>
+                    <!-- end of checkbox to add a new hero for the sighting or not -->
+
+                    <!-- section to add a new hero/ villain -->
                     <div id="addHeroForm" class="form-group">
                         <label for="heroName">
                             Name</label>
@@ -109,6 +121,9 @@
                             </label>
                         </div>
                     </div>
+                    <!-- end of section to add a new hero/ villain -->
+
+                    <!-- section to add an existing location for the sighting -->
                     <div class="form-group">
                         <label for="location">Location:
                         </label>
@@ -118,12 +133,18 @@
                                     th:text="${loc.name}">Superhero/Villain Name
                             </option>
                         </select>
+                        <!-- end of section to add an existing location for the sighting -->
+
+                        <!-- checkbox to add a new location for the sighting or not -->
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="true" name="addNewLocationOption" id="addNewLocation" th:checked="${addNewLocationOption} ? 'checked'">
                             <label class="form-check-label" for="addNewLocation">
                                 Add a New Location
                             </label>
                         </div>
+                        <!-- end of checkbox to add a new location for the sighting or not -->
+
+                        <!-- section to add a new location if they choose to do so -->
                         <div id="addLocationForm" class="form-group">
                             <label for="locationName">
                                 Name</label>
@@ -162,12 +183,17 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- end of section to add a new location if they choose to do so -->
                     </div>
+                    <!-- submits the new sighting -->
                     <button type="submit" class="btn btn-dark">Add Sighting</button>
                 </form>
             </div>
-            </div>
+        </div>
+        <!-- end of the add new sighting form -->
     </div>
+
+    <!-- section to present all the sightings -->
     <div>
         <h3>Sightings</h3>
         <div class="row">
@@ -182,14 +208,17 @@
                        th:text="'Location: ' +${sighting.location.name} +', ' +${sighting.location.address}+', '+${sighting.location.city}+', '+${sighting.location.country}+', '+${sighting.location.postcode}"></p>
                     <p class="card-text"
                        th:text="'Coordinates: ' + ${sighting.location.longitude} +', ' +${sighting.location.latitude}"></p>
+                    <!-- button to view the specific details of the sighting -->
                     <a href="#" th:href="@{/sightingDetail(id=${sighting.id})}" class="btn btn-sm btn-dark">Details</a>
+                    <!-- button to modify the sighting -->
                     <a href="#" th:href="@{/editSighting(id=${sighting.id})}" class="btn btn-sm btn-dark">Edit</a>
+                    <!-- opens the modal which validates whether the sighting should be deleted using the status to distinguish which sighting
+                    information to present within the modal-->
                     <button class="btn btn-sm btn-danger" data-toggle="modal" th:attr="data-target='#deleteModal' + ${status.index}">
                         Delete
                     </button>
 
-
-                    <!-- Modal -->
+                    <!-- Modal to validate whether the sighting should be deleted or not-->
                     <div class="modal fade" th:id="deleteModal+${status.index}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -207,6 +236,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <!-- deletes the sighting -->
                                     <a href="#" th:href="@{/deleteSighting(id=${sighting.id})}" class="btn btn-danger">Delete Sighting</a>
                                 </div>
                             </div>
@@ -218,7 +248,7 @@
             <p/>
         </div>
     </div>
-
+    <!-- end of section to present all the sightings -->
 </div>
 <!-- End main body -->
 <!-- needed to run bootstrap -->
@@ -231,7 +261,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+
 <!-- my own jQuery/ JavaScript scripts for extra functionality -->
+<!-- this script is used to hide the add new hero/ add new location form sections on the page based on whether a
+checkbox is checked or not -->
 <script>
 $(document).ready(function(){
     $("#addHeroForm").hide();
@@ -260,8 +293,6 @@ $(document).ready(function() {
         }
     });
 });
-
-
 </script>
 </body>
-</html>;
+</html>

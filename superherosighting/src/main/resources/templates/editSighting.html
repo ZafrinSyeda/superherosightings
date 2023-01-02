@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- This page is used to edit a sighting within the database -->
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -45,10 +47,14 @@
   <div class="row m-4">
     <h2>Edit Sighting</h2>
   </div>
+  <!-- beginning of edit form -->
   <form action="editSighting" method="POST" class='card p-3 bg-light'>
     <div class="form-group ">
       <label for="superherovillain">Superhero/ Villain:
       </label>
+      <!-- presents the user with a dropdown list of the locations and superheroes within the database to
+       set the sighting to-->
+      <!-- uses th:selected to present the selection item to be the location/ hero the sighting was initially about -->
       <select id="superherovillain" name="superId" class="form-control">
         <option th:each="shv : ${superherovillains}"
                 th:value="${shv.id}"
@@ -71,10 +77,12 @@
       <div>
       </div>
     </div>
+    <!-- keeps the id and time sighted to identify the sighting when applying the changes -->
     <input type="hidden" name="id" th:value="${sighting.id}"/>
     <input type="hidden" name="timeSighted" th:value="${sighting.timeSighted}"/>
     <button type="submit" class="btn btn-dark">Edit Sighting</button>
   </form>
+  <!-- end of edit form -->
 </div>
 </div>
 </div>
